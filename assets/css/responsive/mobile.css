@@ -1,0 +1,12 @@
+/* STARWAKE v0.96 — mobile */
+
+@media(max-width:650px){
+  .front-layer{padding:6px}.front-shell{height:calc(100dvh - 12px);border-radius:17px}
+  .menu-left{padding:20px}.menu-title{font-size:49px;margin:9px 0}.menu-subtitle{font-size:9px}.menu-music{margin-top:7px;font-size:6.5px}.menu-nav{gap:6px}.menu-button{min-height:60px;padding:10px}.menu-button strong{font-size:10px}.menu-button span{font-size:6.4px}
+  .front-screen{padding:14px}.front-top{margin-bottom:8px}.front-top h2{font-size:18px}.front-top p{font-size:7px}.launch-grid,.hangar-grid{grid-template-columns:repeat(2,1fr);gap:6px}.stats-grid{grid-template-columns:repeat(2,1fr);gap:6px}.share-layout{grid-template-columns:1fr}
+  .changelog-shell{grid-template-columns:1fr}.changelog-list{display:flex;overflow:auto}.change-version{min-width:106px}.change-grid{grid-template-columns:1fr}
+  .game-brand small{display:none}.vitals{width:58%;padding:6px}.run-hud{bottom:7px;left:7px;right:7px}.sector-card{top:7px;left:7px;transform:none;width:calc(100% - 14px)}.bossbar{top:40px;width:72%}.abilities{left:7px;top:72px;width:47%}.touch-controls{bottom:86px}
+  .choicegrid{grid-template-columns:1fr;gap:5px}.choice{display:grid;grid-template-columns:32px 1fr;padding:7px}.choice-icon{grid-row:1/5;width:29px;height:29px;margin:0 6px 0 0}.choice-key{display:none}.choice-cat{font-size:5px}.choice h3{font-size:7.7px;margin:1px 0}.choice p{font-size:5.7px}.rarity{margin-top:2px}.modal{padding:9px}.modal-head h2{font-size:15px}
+}
+@media(max-width:650px){.hud-right-dock{gap:4px}.phase-visual{width:94px;min-height:42px;padding:5px}.phase-visual-top span{font-size:4.8px}.phase-visual-key{margin:3px 0;padding:4px 5px}.phase-visual-key span{font-size:6.5px}.phase-visual-key small{display:none}.counters{grid-template-columns:repeat(3,44px)}.counter{height:32px;padding:4px}.counter b{font-size:8px}.counter small{font-size:4px}.vitals{width:min(52%,235px)}}
+@media(max-width:650px){.run-hud{align-items:flex-end}.vitals{width:49%}.hud-right-dock{width:49%;flex-direction:column;align-items:stretch;gap:4px}.phase-visual{width:100%;min-height:40px}.counters{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}.counter{min-width:0}.touch-controls{bottom:94px}}

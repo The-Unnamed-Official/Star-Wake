@@ -1,0 +1,8 @@
+/* STARWAKE v0.96 — tokens */
+
+:root{
+  --bg:#02050a;--panel:#08111c;--panel2:#0d1927;--card:#101f30;
+  --line:rgba(184,224,255,.12);--line2:rgba(184,224,255,.22);
+  --text:#f3f9ff;--muted:#7890a8;--cyan:#67defe;--blue:#6b91ff;
+  --violet:#a57bff;--green:#72efa5;--gold:#ffd36a;--red:#ff657b;--orange:#ff9b61;
+}

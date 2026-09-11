@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>STARWAKE v0.96 Beta</title>
+<link rel="stylesheet" href="assets/css/core/tokens.css">
+<link rel="stylesheet" href="assets/css/core/base.css">
+<link rel="stylesheet" href="assets/css/front/shell.css">
+<link rel="stylesheet" href="assets/css/front/identity.css">
+<link rel="stylesheet" href="assets/css/front/menu.css">
+<link rel="stylesheet" href="assets/css/front/screens.css">
+<link rel="stylesheet" href="assets/css/front/changelog.css">
+<link rel="stylesheet" href="assets/css/front/settings.css">
+<link rel="stylesheet" href="assets/css/front/wipe.css">
+<link rel="stylesheet" href="assets/css/game/layout.css">
+<link rel="stylesheet" href="assets/css/game/hud.css">
+<link rel="stylesheet" href="assets/css/game/drawer.css">
+<link rel="stylesheet" href="assets/css/game/modal.css">
+<link rel="stylesheet" href="assets/css/game/touch.css">
+<link rel="stylesheet" href="assets/css/responsive/tablet.css">
+<link rel="stylesheet" href="assets/css/responsive/mobile.css">
+<link rel="stylesheet" href="assets/css/responsive/short-screen.css">
+</head>
+<body>
+<div class="damage-screen-flash" id="damageScreenFlash"></div>
+
+<div class="front-layer" id="frontLayer">
+  <div class="front-shell" id="frontContent"></div>
+</div>
+
+<div class="game-app" id="gameApp">
+  <header class="game-header">
+    <div class="game-brand">
+      <svg class="header-logo-svg" viewBox="0 0 100 100" aria-label="STARWAKE logo">
+       <defs><linearGradient id="swg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2fbff"/><stop offset=".42" stop-color="#67defe"/><stop offset="1" stop-color="#a57bff"/></linearGradient></defs>
+       <path d="M50 5 66 34 95 50 66 66 50 95 34 66 5 50 34 34Z" fill="none" stroke="url(#swg)" stroke-width="5"/>
+       <path d="M50 18 58 42 82 50 58 58 50 82 42 58 18 50 42 42Z" fill="url(#swg)" opacity=".92"/>
+       <path d="M15 71c21 8 48 8 70 0M21 80c17 6 40 6 58 0" fill="none" stroke="#67defe" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+      </svg>
+      <div><strong>STARWAKE</strong><small>BETA BUILD</small></div>
+    </div>
+    <div class="run-meta">
+      <div class="meta-chip"><span>SECTOR</span><b id="sectorTop">1</b></div>
+      <div class="meta-chip"><span>LEVEL</span><b id="levelTop">1</b></div>
+      <div class="meta-chip"><span>SALVAGE</span><b id="scrapTop">0</b></div>
+      <div class="meta-chip alloy"><span>ALLOY</span><b id="alloyTop">0</b></div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-button" id="runMenuBtn" type="button" aria-label="Open build">☰</button>
+      <button class="icon-button" id="pauseBtn" type="button" aria-label="Pause">Ⅱ</button>
+    </div>
+  </header>
+
+  <main class="game-layout">
+    <section class="game-stage" id="gamewrap">
+      <canvas id="game"></canvas>
+
+      <div class="run-hud">
+        <div class="vitals">
+          <div class="hud-stat"><div class="hud-head"><span>HULL</span><b id="hpText">100 / 100</b></div><div class="hud-bar"><div class="hull-fill" id="hullFill"></div></div></div>
+          <div class="hud-stat"><div class="hud-head"><span>SHIELD <i class="core-state" id="shieldCoreState">NO CORE</i></span><b id="shieldText">0 / 0</b></div><div class="hud-bar"><div class="shield-fill" id="shieldFill"></div></div></div>
+          <div class="hud-stat"><div class="hud-head"><span>XP</span><b id="xpText">0 / 35</b></div><div class="hud-bar"><div class="xp-fill" id="xpFill"></div></div></div>
+        </div>
+        <div class="hud-right-dock">
+          <div class="phase-visual" aria-label="Phase Shift status">
+            <div class="phase-visual-top"><span>PHASE SHIFT</span><b id="dashText">READY</b></div>
+            <div class="phase-visual-key"><span id="phaseKeyVisual">SPACE</span><small>ABILITY STATUS</small></div>
+            <div class="thin-track"><div id="phaseFill"></div></div>
+          </div>
+          <div class="counters">
+            <div class="counter"><i>✹</i><div><b id="bombCount">1</b><small>NOVA</small></div></div>
+            <div class="counter"><i>↻</i><div><b id="rerollCount">1</b><small>REROLL</small></div></div>
+            <div class="counter"><i>×</i><div><b id="comboText">1.0</b><small>COMBO</small></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector-card"><div class="sector-head"><span id="sectorModText">SECTOR CLEARANCE</span><b id="waveText">0 / 8</b></div><div class="sector-track"><div id="waveBar"></div></div></div>
+      <div class="bossbar" id="bossBar"><div class="boss-head"><span id="bossName">ABYSS WARDEN</span><b id="bossHpText">100%</b></div><div class="boss-track"><div id="bossFill"></div></div></div>
+
+      <div class="abilities">
+        <div class="ability timed" id="overdriveStatus"><div class="ability-head"><span>OVERDRIVE</span><b id="overdriveText">OFF</b></div><div class="thin-track"><div id="overdriveFill"></div></div></div>
+        <div class="ability timed" id="magnetStatus"><div class="ability-head"><span>MAGNET</span><b id="magnetText">OFF</b></div><div class="thin-track"><div id="magnetFill"></div></div></div>
+        <div class="ability timed" id="slowStatus"><div class="ability-head"><span>SLOW FIELD</span><b id="slowText">OFF</b></div><div class="thin-track"><div id="slowFill"></div></div></div>
+      </div>
+
+      <div class="touch-controls" id="touchControls">
+        <div class="touch-group">
+          <button class="touch-btn move" id="touchLeft" type="button">◀</button>
+          <button class="touch-btn move" id="touchRight" type="button">▶</button>
+        </div>
+        <div class="touch-group">
+          <button class="touch-btn action phase" id="touchPhase" type="button">PHASE</button>
+          <button class="touch-btn action bomb" id="touchBomb" type="button">NOVA</button>
+          <button class="touch-btn action" id="touchBuild" type="button">BUILD</button>
+          <button class="touch-btn action" id="touchPause" type="button">Ⅱ</button>
+        </div>
+      </div>
+
+      <div class="overlay" id="overlay"><div class="modal" id="overlayCard"></div></div>
+    </section>
+
+    <aside class="run-drawer" id="runDrawer">
+      <div class="drawer-head"><div><small>RUN SYSTEMS</small><strong>CURRENT BUILD</strong></div><button class="drawer-close" id="drawerClose" type="button">×</button></div>
+      <div class="drawer-tabs">
+        <button class="tab active" data-tab="build">BUILD</button>
+        <button class="tab" data-tab="missions">MISSIONS</button>
+        <button class="tab" data-tab="hangar">HANGAR</button>
+        <button class="tab" data-tab="stats">STATS</button>
+      </div>
+      <div class="sidecontent" id="sidecontent"></div>
+    </aside>
+  </main>
+
+  <footer class="game-footer">
+    <span><kbd id="hintMoveLeft">A</kbd>/<kbd id="hintMoveRight">D</kbd> MOVE</span><span><kbd id="hintPhase">SPACE</kbd> PHASE</span><span><kbd id="hintNova">F</kbd> NOVA</span><span><kbd id="hintPause">P</kbd> PAUSE</span><span><kbd id="hintBuild">Q</kbd> BUILD</span>
+    <span class="spacer"></span><span>MOUSE · TOUCH · CONTROLLER SUPPORTED</span>
+  </footer>
+</div>
+
+<script src="assets/js/core/dom.js"></script>
+<script src="assets/js/core/settings.js"></script>
+<script src="assets/js/core/controls.js"></script>
+<script src="assets/js/audio/context.js"></script>
+<script src="assets/js/audio/sfx.js"></script>
+<script src="assets/js/audio/music/sequencer.js"></script>
+<script src="assets/js/audio/music/composer.js"></script>
+<script src="assets/js/audio/music/tracks/redline.js"></script>
+<script src="assets/js/audio/music/tracks/afterimage.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/iron-halo.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/event-horizon.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/glass-comet.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/solar-wound.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/terminal-bloom.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/blackout-drive.js"></script>
+<script src="assets/js/audio/music/tracks/rotation/astral-crown.js"></script>
+<script src="assets/js/upgrades/catalog.js"></script>
+<script src="assets/js/upgrades/presentation.js"></script>
+<script src="assets/js/upgrades/pool.js"></script>
+<script src="assets/js/game/state/progression-data.js"></script>
+<script src="assets/js/game/state/runtime.js"></script>
+<script src="assets/js/game/state/create-run.js"></script>
+<script src="assets/js/game/state/lifecycle.js"></script>
+<script src="assets/js/ui/data/changelog-data.js"></script>
+<script src="assets/js/ui/branding/logo.js"></script>
+<script src="assets/js/ui/front/common.js"></script>
+<script src="assets/js/ui/front/main-launch.js"></script>
+<script src="assets/js/ui/front/map.js"></script>
+<script src="assets/js/ui/front/hangar.js"></script>
+<script src="assets/js/ui/front/settings.js"></script>
+<script src="assets/js/ui/front/records.js"></script>
+<script src="assets/js/ui/front/changelog.js"></script>
+<script src="assets/js/ui/front/share-card.js"></script>
+<script src="assets/js/ui/front/death-share.js"></script>
+<script src="assets/js/ui/danger/wipe-content.js"></script>
+<script src="assets/js/ui/danger/wipe-gauntlet.js"></script>
+<script src="assets/js/ui/danger/wipe-shutdown.js"></script>
+<script src="assets/js/effects/vfx.js"></script>
+<script src="assets/js/game/entities/spawn-drops.js"></script>
+<script src="assets/js/game/combat/targeting.js"></script>
+<script src="assets/js/game/combat/enemy-damage.js"></script>
+<script src="assets/js/game/combat/player-defense.js"></script>
+<script src="assets/js/game/run/flow.js"></script>
+<script src="assets/js/ui/drawer.js"></script>
+<script src="assets/js/input/common.js"></script>
+<script src="assets/js/input/controller.js"></script>
+<script src="assets/js/input/keyboard.js"></script>
+<script src="assets/js/input/ui-events.js"></script>
+<script src="assets/js/input/touch.js"></script>
+<script src="assets/js/input/pointer.js"></script>
+<script src="assets/js/game/update/gameplay.js"></script>
+<script src="assets/js/game/update/meta-vfx.js"></script>
+<script src="assets/js/render/helpers-enemies.js"></script>
+<script src="assets/js/render/player.js"></script>
+<script src="assets/js/render/scene.js"></script>
+<script src="assets/js/ui/hud.js"></script>
+<script src="assets/js/core/loop.js"></script>
+<script src="assets/js/core/bootstrap.js"></script>
+</body>
+</html>

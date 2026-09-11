@@ -1,0 +1,12 @@
+/* STARWAKE v0.96 — tablet */
+
+@media(max-width:1050px){
+  .game-layout{grid-template-columns:1fr}
+  .run-drawer{position:fixed;z-index:120;right:8px;top:71px;bottom:8px;width:min(345px,calc(100vw - 16px));transform:translateX(calc(100% + 20px));transition:transform .18s ease;box-shadow:0 24px 80px rgba(0,0,0,.52)}
+  .run-drawer.open{transform:translateX(0)}.drawer-close{display:block}
+  .touch-controls{display:flex;bottom:88px}.game-footer{display:none}.game-app{grid-template-rows:53px minmax(0,1fr);padding:7px;gap:7px}
+  .game-brand{min-width:128px}.run-meta .meta-chip:nth-child(2),.run-meta .meta-chip:nth-child(3){display:none}
+  .meta-chip{min-width:58px}.run-hud{bottom:7px}.counters{grid-template-columns:repeat(3,57px)}.counter{grid-template-columns:1fr;text-align:center;height:35px}.counter i{display:none}
+  .menu-layout{grid-template-columns:1fr}.menu-right{display:none}
+}
+@media(max-width:1050px){.hud-right-dock{gap:5px}.phase-visual{width:116px;min-height:48px;padding:6px}.phase-visual-key small{display:none}}

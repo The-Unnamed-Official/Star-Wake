@@ -1,0 +1,41 @@
+/* STARWAKE v0.96 — modal */
+
+.choice-effect{font-size:7px;color:var(--green);font-weight:900;margin:4px 0 3px}
+
+.choice-tier{font-size:5.5px;color:var(--muted);letter-spacing:.11em}
+
+.overlay{position:absolute;inset:0;z-index:60;display:none;place-items:center;padding:14px;background:rgba(1,4,8,.69);backdrop-filter:blur(8px)}
+
+.modal{width:min(740px,95%);max-height:calc(100% - 12px);padding:15px;border:1px solid var(--line2);border-radius:18px;background:linear-gradient(180deg,rgba(14,24,38,.985),rgba(6,12,20,.995));overflow:hidden}
+
+.modal-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:10px}
+
+.modal-head small{display:block;font-size:6px;color:var(--cyan);letter-spacing:.15em}
+
+.modal-head h2{font-size:19px;margin:3px 0 0}
+
+.modal-head p{font-size:6px;color:var(--muted);margin:0}
+
+.choicegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+
+.choice{position:relative;text-align:left;padding:10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.022);color:var(--text);cursor:pointer}
+
+.choice:hover{border-color:rgba(103,222,254,.26);background:rgba(103,222,254,.04)}
+
+.choice-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02);font-size:15px;margin-bottom:8px}
+
+.choice-key{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:#111d2a;border:1px solid var(--line);font-size:6px;color:var(--cyan)}
+
+.choice-cat{font-size:5.5px;color:var(--muted);letter-spacing:.11em}
+
+.choice h3{font-size:9px;line-height:1.2;margin:3px 0}
+
+.choice p{font-size:6.3px;line-height:1.35;color:var(--muted);margin:0}
+
+.rarity{font-size:5.5px;letter-spacing:.13em;margin-top:7px}
+
+.modal-foot{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:8px}
+
+.modal-foot span{font-size:6px;color:var(--muted)}
+
+.modal-btn{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#0d1723;color:var(--text);font-size:6px;cursor:pointer}

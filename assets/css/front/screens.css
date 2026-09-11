@@ -1,0 +1,83 @@
+/* STARWAKE v0.96 — screens */
+
+.front-screen{display:flex;flex-direction:column;height:100%;min-height:0;padding:26px}
+
+.front-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px}
+
+.front-top h2{font-size:25px;margin:0;letter-spacing:-.035em}
+
+.front-top p{font-size:9px;color:var(--muted);margin:4px 0 0}
+
+.front-action,.back-button{border:1px solid var(--line);border-radius:10px;background:#0b1623;color:var(--text);padding:9px 13px;cursor:pointer;font-size:8px}
+
+.front-action.primary{background:linear-gradient(100deg,rgba(103,222,254,.16),rgba(165,123,255,.12));border-color:rgba(103,222,254,.28)}
+
+.content-scroll{min-height:0;overflow:auto;scrollbar-width:none}
+
+.content-scroll::-webkit-scrollbar{display:none}
+
+.screen-card{border:1px solid rgba(179,222,255,.105);border-radius:15px;
+ background:linear-gradient(180deg,rgba(255,255,255,.027),rgba(255,255,255,.010));padding:14px;min-height:0;
+ box-shadow:inset 0 1px rgba(255,255,255,.025),0 14px 38px rgba(0,0,0,.12)}
+
+.screen-card h3{font-size:11px;margin:0 0 7px}
+
+.screen-card p{font-size:8px;line-height:1.5;color:var(--muted);margin:0}
+
+.launch-grid,.hangar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+
+.launch-card,.hangar-card{padding:13px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.02);color:var(--text);text-align:left}
+
+button.launch-card,button.hangar-card{cursor:pointer}
+
+.launch-card.selected{border-color:rgba(103,222,254,.38);background:rgba(103,222,254,.055)}
+
+.tile-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;margin-bottom:8px;background:rgba(103,222,254,.07);border:1px solid rgba(103,222,254,.15);color:var(--cyan);font-size:16px}
+
+.launch-card h3,.hangar-card h3{font-size:10px;margin:0}
+
+.launch-card p,.hangar-card p{font-size:7px;color:var(--muted);margin:4px 0 8px;line-height:1.4}
+
+.map-card{position:relative;overflow:hidden;padding:0;flex:1}
+
+.sector-map{width:100%;height:100%;display:block}
+
+.map-path{fill:none;stroke:rgba(118,150,184,.23);stroke-width:4;stroke-linecap:round;stroke-dasharray:7 8}
+
+.map-path.complete{stroke:rgba(103,222,254,.45);stroke-dasharray:none}
+
+.map-node text{font-family:inherit;font-weight:900;fill:#f4fbff;text-anchor:middle;dominant-baseline:central;font-size:9px}
+
+.map-node.completed circle,.map-node.completed polygon{fill:#0c3142;stroke:#67defe;stroke-width:2}
+
+.map-node.current circle,.map-node.current polygon{fill:#4f3377;stroke:#c79cff;stroke-width:2;filter:drop-shadow(0 0 7px rgba(165,123,255,.55))}
+
+.map-node.locked{opacity:.34}
+
+.map-node.locked circle,.map-node.locked polygon{fill:#111a27;stroke:#47566b;stroke-width:2}
+
+.map-node.boss circle,.map-node.boss polygon{stroke:#ffd36a}
+
+.map-summary{position:absolute;z-index:2;left:14px;top:13px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:rgba(4,9,15,.78)}
+
+.map-summary b{font-size:17px}
+
+.map-summary span{display:block;font-size:6px;color:var(--muted);letter-spacing:.12em}
+
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+
+.big-stat{padding:14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.02)}
+
+.big-stat b{display:block;font-size:24px}
+
+.big-stat span{font-size:6px;letter-spacing:.12em;color:var(--muted)}
+
+.share-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr);gap:12px;min-height:0;flex:1}
+
+.share-preview{display:grid;place-items:center;min-height:0;border:1px solid var(--line);border-radius:15px;background:#03070d;overflow:hidden}
+
+.share-preview canvas{max-width:100%;max-height:100%;width:auto;height:auto}
+
+.share-actions{display:flex;flex-direction:column;gap:8px}
+
+.share-status{min-height:39px;padding:9px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:7px;line-height:1.45}
