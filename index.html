@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>STARWAKE v0.96 Beta</title>
+<title>STARWAKE v0.97 Beta</title>
 <link rel="stylesheet" href="assets/css/core/tokens.css">
 <link rel="stylesheet" href="assets/css/core/base.css">
 <link rel="stylesheet" href="assets/css/front/shell.css">
@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="assets/css/game/hud.css">
 <link rel="stylesheet" href="assets/css/game/drawer.css">
 <link rel="stylesheet" href="assets/css/game/modal.css">
+<link rel="stylesheet" href="assets/css/game/ad.css">
 <link rel="stylesheet" href="assets/css/game/touch.css">
 <link rel="stylesheet" href="assets/css/responsive/tablet.css">
 <link rel="stylesheet" href="assets/css/responsive/mobile.css">
@@ -32,11 +33,12 @@
 <div class="game-app" id="gameApp">
   <header class="game-header">
     <div class="game-brand">
-      <svg class="header-logo-svg" viewBox="0 0 100 100" aria-label="STARWAKE logo">
+      <svg class="header-logo-svg sw-logo" viewBox="0 0 100 100" aria-label="STARWAKE logo">
        <defs><linearGradient id="swg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2fbff"/><stop offset=".42" stop-color="#67defe"/><stop offset="1" stop-color="#a57bff"/></linearGradient></defs>
-       <path d="M50 5 66 34 95 50 66 66 50 95 34 66 5 50 34 34Z" fill="none" stroke="url(#swg)" stroke-width="5"/>
-       <path d="M50 18 58 42 82 50 58 58 50 82 42 58 18 50 42 42Z" fill="url(#swg)" opacity=".92"/>
-       <path d="M15 71c21 8 48 8 70 0M21 80c17 6 40 6 58 0" fill="none" stroke="#67defe" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+       <g class="sw-logo-outer"><path d="M50 5 66 34 95 50 66 66 50 95 34 66 5 50 34 34Z" fill="none" stroke="url(#swg)" stroke-width="5"/></g>
+       <g class="sw-logo-inner"><path d="M50 18 58 42 82 50 58 58 50 82 42 58 18 50 42 42Z" fill="url(#swg)" opacity=".92"/></g>
+       <g class="sw-logo-core"><circle cx="50" cy="50" r="9" fill="#07111c" stroke="#effcff" stroke-width="2"/><circle class="sw-logo-core-dot" cx="50" cy="50" r="3" fill="#67defe"/></g>
+       <g class="sw-logo-wake"><path class="sw-logo-wave wave-a" d="M15 71c21 8 48 8 70 0" fill="none" stroke="#67defe" stroke-width="3" stroke-linecap="round" opacity=".55"/><path class="sw-logo-wave wave-b" d="M21 80c17 6 40 6 58 0" fill="none" stroke="#67defe" stroke-width="3" stroke-linecap="round" opacity=".42"/></g>
       </svg>
       <div><strong>STARWAKE</strong><small>BETA BUILD</small></div>
     </div>
@@ -47,8 +49,9 @@
       <div class="meta-chip alloy"><span>ALLOY</span><b id="alloyTop">0</b></div>
     </div>
     <div class="header-actions">
-      <button class="icon-button" id="runMenuBtn" type="button" aria-label="Open build">☰</button>
-      <button class="icon-button" id="pauseBtn" type="button" aria-label="Pause">Ⅱ</button>
+      <button class="icon-button" id="runMenuBtn" type="button" aria-label="Open build"><span>▦</span></button>
+      <button class="icon-button" id="settingsBtn" type="button" aria-label="Open settings"><span>⚙</span></button>
+      <button class="icon-button" id="pauseBtn" type="button" aria-label="Pause"><span>Ⅱ</span></button>
     </div>
   </header>
 
@@ -65,7 +68,7 @@
         <div class="hud-right-dock">
           <div class="phase-visual" aria-label="Phase Shift status">
             <div class="phase-visual-top"><span>PHASE SHIFT</span><b id="dashText">READY</b></div>
-            <div class="phase-visual-key"><span id="phaseKeyVisual">SPACE</span><small>ABILITY STATUS</small></div>
+            <div class="phase-visual-key"><span id="phaseKeyVisual">L-SHIFT</span><small>STATUS DISPLAY</small></div>
             <div class="thin-track"><div id="phaseFill"></div></div>
           </div>
           <div class="counters">
@@ -108,13 +111,14 @@
         <button class="tab" data-tab="missions">MISSIONS</button>
         <button class="tab" data-tab="hangar">HANGAR</button>
         <button class="tab" data-tab="stats">STATS</button>
+        <button class="tab" data-tab="settings">SETTINGS</button>
       </div>
       <div class="sidecontent" id="sidecontent"></div>
     </aside>
   </main>
 
   <footer class="game-footer">
-    <span><kbd id="hintMoveLeft">A</kbd>/<kbd id="hintMoveRight">D</kbd> MOVE</span><span><kbd id="hintPhase">SPACE</kbd> PHASE</span><span><kbd id="hintNova">F</kbd> NOVA</span><span><kbd id="hintPause">P</kbd> PAUSE</span><span><kbd id="hintBuild">Q</kbd> BUILD</span>
+    <span><kbd id="hintMoveLeft">←</kbd>/<kbd id="hintMoveRight">→</kbd> MOVE</span><span><kbd id="hintPhase">L-SHIFT</kbd> PHASE</span><span><kbd id="hintNova">Q</kbd> NOVA</span><span><kbd id="hintPause">Z</kbd> PAUSE</span><span><kbd id="hintBuild">X</kbd> BUILD</span>
     <span class="spacer"></span><span>MOUSE · TOUCH · CONTROLLER SUPPORTED</span>
   </footer>
 </div>
@@ -135,10 +139,14 @@
 <script src="assets/js/audio/music/tracks/rotation/terminal-bloom.js"></script>
 <script src="assets/js/audio/music/tracks/rotation/blackout-drive.js"></script>
 <script src="assets/js/audio/music/tracks/rotation/astral-crown.js"></script>
+<script src="assets/js/audio/music/boss-theme.js"></script>
 <script src="assets/js/upgrades/catalog.js"></script>
 <script src="assets/js/upgrades/presentation.js"></script>
 <script src="assets/js/upgrades/pool.js"></script>
 <script src="assets/js/game/state/progression-data.js"></script>
+<script src="assets/js/game/balance/scaling.js"></script>
+<script src="assets/js/game/bosses/catalog.js"></script>
+<script src="assets/js/game/bosses/behavior.js"></script>
 <script src="assets/js/game/state/runtime.js"></script>
 <script src="assets/js/game/state/create-run.js"></script>
 <script src="assets/js/game/state/lifecycle.js"></script>
@@ -156,6 +164,9 @@
 <script src="assets/js/ui/danger/wipe-content.js"></script>
 <script src="assets/js/ui/danger/wipe-gauntlet.js"></script>
 <script src="assets/js/ui/danger/wipe-shutdown.js"></script>
+<script src="assets/js/ui/ad/ad-catalog.js"></script>
+<script src="assets/js/ui/ad/ad-gameplay.js"></script>
+<script src="assets/js/ui/ad/reroll-ad.js"></script>
 <script src="assets/js/effects/vfx.js"></script>
 <script src="assets/js/game/entities/spawn-drops.js"></script>
 <script src="assets/js/game/combat/targeting.js"></script>
@@ -171,6 +182,7 @@
 <script src="assets/js/input/pointer.js"></script>
 <script src="assets/js/game/update/gameplay.js"></script>
 <script src="assets/js/game/update/meta-vfx.js"></script>
+<script src="assets/js/render/bosses.js"></script>
 <script src="assets/js/render/helpers-enemies.js"></script>
 <script src="assets/js/render/player.js"></script>
 <script src="assets/js/render/scene.js"></script>

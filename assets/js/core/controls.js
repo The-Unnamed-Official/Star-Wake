@@ -16,14 +16,14 @@ function beginControlRemap(action,button){
  const capture=e=>{
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
   document.removeEventListener('keydown',capture,true);controlRemapActive=false;
-  if(e.code==='Escape'){showSettings();return}
+  if(e.code==='Escape'){refreshSettingsSurface();return}
   const old=persistent.controls[action];
   for(const [other,code] of Object.entries(persistent.controls))if(other!==action&&code===e.code)persistent.controls[other]=old;
-  persistent.controls[action]=e.code;save();refreshControlHints();showSettings()
+  persistent.controls[action]=e.code;save();refreshControlHints();refreshSettingsSurface()
  };
  document.addEventListener('keydown',capture,true)
 }
-function resetControlBindings(){persistent.controls=Object.assign({},DEFAULT_CONTROLS);save();refreshControlHints();showSettings()}
+function resetControlBindings(){persistent.controls=Object.assign({},DEFAULT_CONTROLS);save();refreshControlHints();refreshSettingsSurface()}
 function refreshControlHints(){
  const ids={moveLeft:'hintMoveLeft',moveRight:'hintMoveRight',phase:'hintPhase',nova:'hintNova',pause:'hintPause',build:'hintBuild'};
  for(const [a,id] of Object.entries(ids)){const el=E(id);if(el)el.textContent=prettyKey(persistent.controls[a])}

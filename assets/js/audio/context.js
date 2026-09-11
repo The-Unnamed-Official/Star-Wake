@@ -3,7 +3,7 @@
 /* ========================= AUDIO ========================= */
 let audioCtx=null,sfxBus=null,musicBus=null,compressor=null,noiseBuffer=null;
 let musicScheduler=null,musicArmed=false,musicTrackStart=0,musicTrackBar=0,musicGeneration=0;
-let musicCurrentTrack='redline',secretTrackActive=false,rotationIndex=0;
+let musicCurrentTrack='redline',secretTrackActive=false,rotationIndex=0,bossThemeActive=false,bossMusicReturn=null;
 const SONG_SECONDS=40;
 const REDLINE_BPM=96,REDLINE_BEAT=60/REDLINE_BPM,REDLINE_BARS=16;
 const AFTERIMAGE_BPM=96,AFTERIMAGE_BEAT=60/AFTERIMAGE_BPM,AFTERIMAGE_BARS=16;

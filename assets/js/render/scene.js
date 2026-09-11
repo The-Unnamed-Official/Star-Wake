@@ -11,7 +11,7 @@ function draw(){
   ctx.beginPath();ctx.moveTo(0,-len);ctx.lineTo(wid,4);ctx.lineTo(0,1);ctx.lineTo(-wid,4);ctx.closePath();ctx.fill();
   ctx.globalAlpha=.36;ctx.fillRect(-wid*.32,3,wid*.64,7+b.size);ctx.restore()
  }
- for(const b of enemyBullets){ctx.fillStyle='#ff8193';ctx.shadowColor='#ff657b';ctx.shadowBlur=9;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
+ for(const b of enemyBullets){ctx.fillStyle=b.color||'#ff8193';ctx.shadowColor=b.color||'#ff657b';ctx.shadowBlur=9;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
  for(const d of drops){ctx.save();ctx.translate(d.x,d.y);ctx.rotate(d.spin);if(d.kind==='xp'){const pulse=1+Math.sin(performance.now()/130+d.spin)*.10;ctx.scale(pulse,pulse);drawShape(d.shape,d.size,d.color,d.glow);ctx.fillStyle='rgba(255,255,255,.88)';ctx.beginPath();ctx.arc(-d.size*.22,-d.size*.22,Math.max(1.3,d.size*.22),0,Math.PI*2);ctx.fill()}else{ctx.fillStyle='#72efa5';ctx.shadowColor='#baffd4';ctx.shadowBlur=10;ctx.fillRect(-d.size,-d.size,d.size*2,d.size*2)}ctx.restore()}
  for(const p of powerups){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.t*.8);const c=powerColor(p.type);ctx.strokeStyle=c;ctx.fillStyle=c+'25';ctx.shadowColor=c;ctx.shadowBlur=14;ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<6;i++){const a=Math.PI/6+i*Math.PI/3,x=Math.cos(a)*11,y=Math.sin(a)*11;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.closePath();ctx.fill();ctx.stroke();ctx.rotate(-p.t*.8);ctx.fillStyle=c;ctx.shadowBlur=0;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='900 9px system-ui';ctx.fillText({heal:'+',shield:'⬡',overdrive:'⚡',magnet:'⌁',bomb:'✹',slow:'◷'}[p.type],0,1);ctx.restore()}
  for(const e of enemies)drawEnemy(e);

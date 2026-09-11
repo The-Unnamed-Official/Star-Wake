@@ -1,4 +1,4 @@
-/* STARWAKE v0.96 — identity */
+/* STARWAKE v0.97 — animated identity */
 
 .menu-eyebrow{font-size:10px;letter-spacing:.22em;color:var(--cyan);font-weight:900}
 
@@ -32,3 +32,18 @@
 .logo-word span:last-child{background:linear-gradient(90deg,#f3f9ff 0 28%,#67defe 65%,#a57bff);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 .header-logo-svg{width:34px;height:34px;filter:drop-shadow(0 0 9px rgba(103,222,254,.18))}
+
+
+/* Internal SVG idle motion: the logo itself moves, not merely its container. */
+.sw-logo .sw-logo-outer,.header-logo-svg .sw-logo-outer{transform-box:fill-box;transform-origin:center;animation:swOuterIdle 7s ease-in-out infinite}
+.sw-logo .sw-logo-inner,.header-logo-svg .sw-logo-inner{transform-box:fill-box;transform-origin:center;animation:swInnerIdle 5.4s ease-in-out infinite}
+.sw-logo .sw-logo-core,.header-logo-svg .sw-logo-core{transform-box:fill-box;transform-origin:center;animation:swCoreIdle 2.8s ease-in-out infinite}
+.sw-logo .sw-logo-core-dot,.header-logo-svg .sw-logo-core-dot{animation:swCoreGlow 1.7s ease-in-out infinite}
+.sw-logo .sw-logo-wave,.header-logo-svg .sw-logo-wave{transform-box:fill-box;transform-origin:center;stroke-dasharray:120;animation:swWakeFlow 4.8s ease-in-out infinite}
+.sw-logo .wave-b,.header-logo-svg .wave-b{animation-delay:-1.2s}.sw-logo .wave-c,.header-logo-svg .wave-c{animation-delay:-2.1s}
+@keyframes swOuterIdle{0%,100%{transform:rotate(-1.2deg) scale(.985)}50%{transform:rotate(1.5deg) scale(1.018)}}
+@keyframes swInnerIdle{0%,100%{transform:rotate(2deg) scale(.98)}50%{transform:rotate(-2.4deg) scale(1.035)}}
+@keyframes swCoreIdle{0%,100%{transform:scale(.92)}45%{transform:scale(1.08)}60%{transform:scale(1.02)}}
+@keyframes swCoreGlow{0%,100%{opacity:.45;filter:drop-shadow(0 0 2px #67defe)}50%{opacity:1;filter:drop-shadow(0 0 9px #67defe)}}
+@keyframes swWakeFlow{0%,100%{transform:translateX(-2px);stroke-dashoffset:0;opacity:.36}50%{transform:translateX(3px);stroke-dashoffset:-18;opacity:.78}}
+@media(prefers-reduced-motion:reduce){.sw-logo *,.header-logo-svg *{animation:none!important}}

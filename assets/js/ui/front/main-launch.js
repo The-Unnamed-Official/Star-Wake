@@ -7,14 +7,14 @@ function showMain(){
    <div class="menu-eyebrow">ARCADE ROGUELITE</div>
    <div class="logo-lockup">${logoSvg()}<div class="logo-word"><span>STAR</span><span>WAKE</span></div></div>
    <p class="menu-subtitle">Ride deeper into an escalating star-current, vacuum physical XP, build increasingly absurd targeting systems, and keep your route alive as long as you can.</p>
-   <button class="version-chip" type="button" data-front="changelog">v0.96 BETA · CHANGELOG</button>
+   <button class="version-chip" type="button" data-front="changelog">v0.97 BETA · CHANGELOG</button>
    <div class="menu-music"><i class="music-dot"></i><span>SOUNDTRACK:</span><button class="song-name" type="button" data-song-toggle>${secretTrackActive?'AFTERIMAGE':musicTrackTitle(musicCurrentTrack).toUpperCase()}</button><span>· 40 SECOND CHIPTUNE LOOP · <span class="song-secret-note">${secretTrackActive?'secret track active':`rotation ${rotationIndex+1}/${MUSIC_ROTATION.length} · click for secret`}</span></span></div>
    <div class="menu-nav">
-    <button class="menu-button primary" data-front="play"><strong>▶ START RUN</strong><span>Configure threat and enter the wake.</span></button>
-    <button class="menu-button" data-front="map"><strong>⌁ STAR MAP</strong><span>${cleared} sectors cleared · frontier ${persistent.best||1}</span></button>
-    <button class="menu-button" data-front="hangar"><strong>◇ HANGAR</strong><span>Spend Alloy on permanent ship systems.</span></button>
-    <button class="menu-button" data-front="records"><strong>▦ RECORDS</strong><span>${TOTAL_UPGRADES} possible run upgrades.</span></button>
-    <button class="menu-button" data-front="settings"><strong>⚙ SETTINGS</strong><span>Audio, visuals, controls and save data.</span></button>
+    <button class="menu-button primary" data-front="play"><span class="menu-action-icon">▶</span><span class="menu-action-copy"><strong>START RUN</strong><span>Configure threat and enter the wake.</span></span><span class="menu-action-chevron">↗</span></button>
+    <button class="menu-button" data-front="map"><span class="menu-action-icon">⌁</span><span class="menu-action-copy"><strong>STAR MAP</strong><span>${cleared} sectors cleared · frontier ${persistent.best||1}</span></span><span class="menu-action-chevron">→</span></button>
+    <button class="menu-button" data-front="hangar"><span class="menu-action-icon">◇</span><span class="menu-action-copy"><strong>HANGAR</strong><span>Spend Alloy on permanent ship systems.</span></span><span class="menu-action-chevron">→</span></button>
+    <button class="menu-button" data-front="records"><span class="menu-action-icon">▦</span><span class="menu-action-copy"><strong>RECORDS</strong><span>${TOTAL_UPGRADES} possible run upgrades.</span></span><span class="menu-action-chevron">→</span></button>
+    <button class="menu-button" data-front="settings"><span class="menu-action-icon">⚙</span><span class="menu-action-copy"><strong>SETTINGS</strong><span>Audio, controls, accessibility and save data.</span></span><span class="menu-action-chevron">→</span></button>
    </div>
   </section>
   <aside class="menu-right">

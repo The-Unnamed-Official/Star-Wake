@@ -1,4 +1,4 @@
-/* STARWAKE v0.96 — touch */
+/* STARWAKE v0.97 — touch */
 
 .touch-controls{display:none;position:absolute;left:8px;right:8px;bottom:8px;justify-content:space-between;align-items:flex-end;z-index:20;pointer-events:none}
 

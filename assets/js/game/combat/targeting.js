@@ -13,9 +13,9 @@ function nearestTarget(x,y){
  return best
 }
 function estimatedEnemyVelocity(e){
+ if(Number.isFinite(e.vx)&&Number.isFinite(e.vy))return {vx:e.vx,vy:e.vy};
  let vx=0,vy=e.type==='boss'?0:e.speed;
  if(e.type==='zigzag')vx=Math.sin(e.phase*2.2)*50;
- else if(e.type==='boss')vx=Math.cos(e.phase*.65)*W*.20*.65*2.2;
  return {vx,vy}
 }
 function straightShotVector(speed,accuracy,fanAngle=0,serial=0){

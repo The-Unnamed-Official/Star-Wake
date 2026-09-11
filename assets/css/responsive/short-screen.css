@@ -1,4 +1,4 @@
-/* STARWAKE v0.96 — short-screen */
+/* STARWAKE v0.97 — short-screen */
 
 @media(max-height:620px){
   .menu-left{padding:16px 24px}.menu-title{font-size:43px;margin:6px 0}.menu-subtitle{font-size:8px;line-height:1.35}.menu-music{margin-top:4px;font-size:5.8px}.menu-button{min-height:52px}.menu-nav{gap:5px}.menu-button strong{font-size:9px}.menu-button span{font-size:6px}

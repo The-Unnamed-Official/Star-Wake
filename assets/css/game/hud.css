@@ -1,4 +1,4 @@
-/* STARWAKE v0.96 — hud */
+/* STARWAKE v0.97 — hud */
 
 .run-hud{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;pointer-events:none;z-index:5}
 

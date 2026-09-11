@@ -32,8 +32,15 @@ frontContent.addEventListener('click',async e=>{
 });
 frontContent.addEventListener('input',e=>{const slider=e.target.closest('[data-volume]');if(slider)setVolume(slider.dataset.volume,slider.value)});
 
-overlayCard.addEventListener('click',e=>{const c=e.target.closest('[data-choice]');if(c){pickUpgrade(+c.dataset.choice);return}const a=e.target.closest('[data-action]')?.dataset.action;if(a==='reroll')reroll();if(a==='resume')pause();if(a==='main'){state.running=false;state.paused=false;overlay.style.display='none';showMain()}});
+overlayCard.addEventListener('click',e=>{const c=e.target.closest('[data-choice]');if(c){pickUpgrade(+c.dataset.choice);return}const a=e.target.closest('[data-action]')?.dataset.action;if(a==='reroll')reroll();if(a==='ad-reroll')startRerollAd();if(a==='resume')pause();if(a==='settings'){overlay.style.display='none';openRunSettings()}if(a==='main'){if(bossThemeActive)stopBossTheme();state.running=false;state.paused=false;overlay.style.display='none';showMain()}});
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{sideTab=t.dataset.tab;renderSide()}));
-sidecontent.addEventListener('click',e=>{const b=e.target.closest('[data-buy]');if(b)buyHangar(+b.dataset.buy)});
-E('runMenuBtn').onclick=openDrawer;E('pauseBtn').onclick=pause;E('drawerClose').onclick=closeDrawer;E('touchBuild').onclick=openDrawer;E('touchPause').onclick=pause;E('touchPhase').onpointerdown=e=>{e.preventDefault();phaseShift()};E('touchBomb').onpointerdown=e=>{e.preventDefault();useBomb()};
+sidecontent.addEventListener('click',e=>{
+ const b=e.target.closest('[data-buy]');if(b){buyHangar(+b.dataset.buy);return}
+ const setting=e.target.closest('[data-setting]');if(setting){toggleSetting(setting.dataset.setting);return}
+ const volumeStep=e.target.closest('[data-volume-step]');if(volumeStep){const [kind,delta]=volumeStep.dataset.volumeStep.split(':');const current=kind==='music'?persistent.settings.musicVolume:persistent.settings.sfxVolume;setVolume(kind,current+Number(delta));return}
+ const remap=e.target.closest('[data-remap]');if(remap){beginControlRemap(remap.dataset.remap,remap);return}
+ if(e.target.closest('[data-reset-controls]')){resetControlBindings();return}
+});
+sidecontent.addEventListener('input',e=>{const slider=e.target.closest('[data-volume]');if(slider)setVolume(slider.dataset.volume,slider.value)});
+E('runMenuBtn').onclick=toggleBuildMenu;E('settingsBtn').onclick=openRunSettings;E('pauseBtn').onclick=pause;E('drawerClose').onclick=closeDrawer;E('touchBuild').onclick=toggleBuildMenu;E('touchPause').onclick=pause;E('touchPhase').onpointerdown=e=>{e.preventDefault();phaseShift()};E('touchBomb').onpointerdown=e=>{e.preventDefault();useBomb()};

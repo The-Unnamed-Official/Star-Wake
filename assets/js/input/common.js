@@ -3,10 +3,24 @@
 /* ========================= INPUT ========================= */
 const input={left:false,right:false,mouseActive:false,mouseX:0,touchActive:false,touchX:0,gamepadX:0};
 let gpPrev={},focusIndex=0,navCooldown=0;
-function openDrawer(){renderSide();drawer.classList.add('open')}function closeDrawer(){drawer.classList.remove('open')}
+function openDrawer(){renderSide();drawer.classList.add('open')}
+function openRunSettings(){
+ sideTab='settings';renderSide();drawer.classList.add('open','settings-inspect');
+ const tab=drawer.querySelector('[data-tab="settings"]');tab?.focus()
+}
+function closeDrawer(){drawer.classList.remove('open','build-inspect','build-settled','settings-inspect')}
+function toggleBuildMenu(){
+ sideTab='build';renderSide();
+ if(innerWidth<=1050){drawer.classList.toggle('open');return}
+ drawer.classList.toggle('build-inspect');
+ if(drawer.classList.contains('build-inspect')){
+  const tab=drawer.querySelector('[data-tab="build"]');tab?.focus();
+  clearTimeout(drawer._buildPulse);drawer._buildPulse=setTimeout(()=>drawer.classList.add('build-settled'),180)
+ }else drawer.classList.remove('build-settled')
+}
 function pause(){
  if(!state||state.dead||state.choosing)return;state.paused=!state.paused;state.running=!state.paused;
- if(state.paused){overlayCard.innerHTML=`<div class="modal-head"><div><small>PAUSED</small><h2>Wake suspended</h2></div><p>Nothing moves while paused.</p></div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"><button class="modal-btn" data-action="resume">RESUME</button><button class="modal-btn" data-action="main">MAIN MENU</button></div>`;overlay.style.display='grid';focusOverlay()}else overlay.style.display='none'
+ if(state.paused){overlayCard.innerHTML=`<div class="modal-head"><div><small>PAUSED</small><h2>Wake suspended</h2></div><p>Nothing moves while paused.</p></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><button class="modal-btn" data-action="resume">RESUME</button><button class="modal-btn" data-action="settings">SETTINGS</button><button class="modal-btn" data-action="main">MAIN MENU</button></div>`;overlay.style.display='grid';focusOverlay()}else overlay.style.display='none'
 }
 function focusOverlay(){setTimeout(()=>{const b=overlayCard.querySelector('button');if(b)b.focus()},10)}
 function interactiveButtons(){

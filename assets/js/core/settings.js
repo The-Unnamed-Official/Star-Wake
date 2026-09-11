@@ -1,15 +1,18 @@
 'use strict';
 
-const SAVE_KEY='starwake-v06-save';
-const LEGACY_SAVE_KEY='voidrunner-v2-save';
-const DEFAULT_CONTROLS={
+const SAVE_KEY='starwake-v097-save';
+const LEGACY_SAVE_KEYS=['starwake-v06-save','voidrunner-v2-save'];
+const LEGACY_DEFAULT_CONTROLS={
  moveLeft:'KeyA',moveRight:'KeyD',phase:'Space',nova:'KeyF',pause:'KeyP',build:'KeyQ'
+};
+const DEFAULT_CONTROLS={
+ moveLeft:'ArrowLeft',moveRight:'ArrowRight',phase:'ShiftLeft',nova:'KeyQ',pause:'KeyZ',build:'KeyX'
 };
 const DEFAULT_PERSIST={
  alloy:0,best:1,totalKills:0,totalRuns:0,totalBosses:0,totalSalvage:0,
  perma:{damage:0,hp:0,shield:0,magnet:0,phase:0,luck:0,core:0},
  settings:{
-  sound:true,music:true,particles:true,shake:true,hitFeedback:true,
+  sound:true,music:true,particles:true,shake:true,hitFeedback:true,ignoreGameplayMouse:false,
   musicVolume:.17,sfxVolume:.78
  },
  controls:{...DEFAULT_CONTROLS},
@@ -17,18 +20,24 @@ const DEFAULT_PERSIST={
 };
 function cloneDefaults(){return JSON.parse(JSON.stringify(DEFAULT_PERSIST))}
 let stored={};
-try{stored=JSON.parse(localStorage.getItem(SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||'{}')}catch{}
+try{
+ let raw=localStorage.getItem(SAVE_KEY);
+ if(!raw)for(const key of LEGACY_SAVE_KEYS){raw=localStorage.getItem(key);if(raw)break}
+ stored=JSON.parse(raw||'{}')
+}catch{}
 const persistent=Object.assign(cloneDefaults(),stored);
 persistent.perma=Object.assign({},DEFAULT_PERSIST.perma,persistent.perma||{});
 persistent.settings=Object.assign({},DEFAULT_PERSIST.settings,persistent.settings||{});
-persistent.controls=Object.assign({},DEFAULT_CONTROLS,persistent.controls||{});
+const loadedControls=Object.assign({},persistent.controls||{});
+const hadLegacyDefaults=Object.keys(LEGACY_DEFAULT_CONTROLS).every(k=>!loadedControls[k]||loadedControls[k]===LEGACY_DEFAULT_CONTROLS[k]);
+persistent.controls=hadLegacyDefaults?Object.assign({},DEFAULT_CONTROLS):Object.assign({},DEFAULT_CONTROLS,loadedControls);
 persistent.achievements=persistent.achievements||{};
 function save(){
  try{localStorage.setItem(SAVE_KEY,JSON.stringify(persistent))}catch{}
  if(ui?.alloy)ui.alloy.textContent=Math.floor(persistent.alloy)
 }
 function resetPersistentSave(){
- try{localStorage.removeItem(SAVE_KEY);localStorage.removeItem(LEGACY_SAVE_KEY)}catch{}
+ try{localStorage.removeItem(SAVE_KEY);for(const key of LEGACY_SAVE_KEYS)localStorage.removeItem(key)}catch{}
  const fresh=cloneDefaults();
  for(const key of Object.keys(persistent))delete persistent[key];
  Object.assign(persistent,fresh);

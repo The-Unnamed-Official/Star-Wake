@@ -24,7 +24,7 @@ function takeDamage(n){
 }
 function useBomb(){if(!state.running||state.bombs<=0)return;state.bombs--;sfx('bomb');enemyBullets=[];ring(state.x,state.y,'#ff9b61',10,Math.max(W,H)*.72,.58,6);flash('#ff9b61',.25);for(const e of enemies)damageEnemy(e,state.damage*state.bombPower,null);enemies=enemies.filter(e=>!e.dead)}
 function phaseShift(){
- if(!state.running||state.phaseTimer>0)return;const old=state.x,dir=Math.abs(state.vx)>30?Math.sign(state.vx):state.lastDir||1;let nx=old+dir*state.phaseRange;if(nx<26||nx>W-26)nx=old-dir*state.phaseRange;nx=Math.max(26,Math.min(W-26,nx));
+ if(!state.running||state.phaseTimer>0)return;const old=state.x,dir=state.lastDashDir||1;let nx=old+dir*state.phaseRange;if(nx<26||nx>W-26)nx=old-dir*state.phaseRange;nx=Math.max(26,Math.min(W-26,nx));
  state.x=nx;state.vx=dir*state.maxSpeed*.55;state.phaseTimer=state.phaseCd;state.dashInvuln=.42;enemyBullets=enemyBullets.filter(b=>!(b.x>=Math.min(old,nx)-45&&b.x<=Math.max(old,nx)+45&&Math.abs(b.y-state.y)<140));
  sfx('dash',{x:nx});ring(old,state.y,'#a57bff',5,42,.25,2);ring(nx,state.y,'#67defe',6,58,.34,3);burst(old,state.y,'#a57bff',9,110);burst(nx,state.y,'#67defe',12,130);floatText((old+nx)/2,state.y-34,'PHASE','#67defe',10)
 }

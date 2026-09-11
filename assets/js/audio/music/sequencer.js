@@ -37,6 +37,7 @@ function setRotationTrackByIndex(index){
  musicCurrentTrack=MUSIC_ROTATION[rotationIndex];updateSongLabel()
 }
 function advanceRotationTrack(){
+ if(bossThemeActive)return;
  if(secretTrackActive){musicCurrentTrack='afterimage';return}
  setRotationTrackByIndex(rotationIndex+1)
 }
