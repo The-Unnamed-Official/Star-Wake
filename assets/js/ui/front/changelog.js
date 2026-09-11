@@ -1,6 +1,6 @@
 'use strict';
 
-function showChangelog(version='0.96'){
+function showChangelog(version='0.97'){
  const item=CHANGELOG.find(x=>x.v===version)||CHANGELOG[0];
  showFront(`<div class="front-screen">
   <div class="front-top"><div><h2>Changelog</h2><p>STARWAKE build history and major systems introduced in each playable milestone.</p></div><button class="back-button" data-front="main">BACK</button></div>

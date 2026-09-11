@@ -18,19 +18,21 @@ function spawnEnemy(type=null){
   if(s>=11&&r<.06)type='shielded';else if(s>=9&&r<.12)type='sniper';else if(s>=7&&r<.19)type='charger';else if(s>=6&&r<.28)type='shooter';
   else if(s>=4&&r<.38*(state.sectorMod?.elite||1))type='elite';else if(s>=3&&r<.51)type='zigzag';else if(s>=2&&r<.65)type='tank';else if(s>=8&&r<.78)type='swarm';else type='scout'
  }
- const d=enemyDefs[type],depth=s-1,D=difficulty[diff],hpScale=Math.pow(1.10,depth)*(1+depth*.035)*D.hp,speedScale=Math.min(2.05,1+depth*.025)*(state.sectorMod?.speed||1),dmgScale=Math.pow(1.055,depth)*D.damage;
+ const d=enemyDefs[type],scale=enemyScalingForSector(s),hpScale=scale.hp,speedScale=scale.speed*(state.sectorMod?.speed||1),dmgScale=scale.damage;
  const rankRoll=Math.random();let rank='standard',rankHp=1,rankDmg=1,rankSpeed=1,rewardMult=1;
  if(s>=18&&rankRoll<Math.min(.08,.025+(s-18)*.002)){rank='apex';rankHp=2.05;rankDmg=1.45;rankSpeed=1.14;rewardMult=2.15}
  else if(s>=8&&rankRoll<Math.min(.24,.10+(s-8)*.007)){rank='veteran';rankHp=1.48;rankDmg=1.20;rankSpeed=1.08;rewardMult=1.45}
  const x=24+Math.random()*(W-48);
- enemies.push({type,rank,rewardMult,x,y:-30,r:d.r,hp:d.hp*hpScale*rankHp,maxHp:d.hp*hpScale*rankHp,speed:d.speed*speedScale*rankSpeed,dmg:d.dmg*dmgScale*rankDmg,color:d.color,phase:Math.random()*6.28,shoot:1.4+Math.random(),dead:false});
+ enemies.push({type,rank,rewardMult,x,y:-30,r:d.r,hp:d.hp*hpScale*rankHp,maxHp:d.hp*hpScale*rankHp,speed:d.speed*speedScale*rankSpeed,dmg:d.dmg*dmgScale*rankDmg,color:d.color,phase:Math.random()*6.28,shoot:1.4+Math.random(),vx:0,vy:d.speed*speedScale*rankSpeed,dead:false});
  if(rank==='apex')log('APEX contact entered the sector.')
 }
 function spawnBoss(){
- const tier=Math.max(0,Math.floor(state.sector/5)-1),hp=520*Math.pow(1.68,tier)*difficulty[diff].hp;
- const e={type:'boss',x:W/2,y:84,r:40,hp,maxHp:hp,speed:18,dmg:24*Math.pow(1.09,tier)*difficulty[diff].damage,color:'#ff9b61',phase:0,shoot:Math.max(.34,.8-tier*.04),dead:false};
- enemies.push(e);state.boss=e;ui.bossBar.style.display='block';sfx('boss');log('Boss signal detected.')
+ const def=chooseBossVariant(state.bossHistory),scale=bossScalingForSector(state.sector,def);state.bossHistory.push(def.id);
+ const rx=38*def.width,ry=38*def.height,hp=scale.hp;
+ const e={type:'boss',bossDef:def,name:def.name,x:W/2,y:84,r:Math.max(rx,ry),rx,ry,hp,maxHp:hp,speed:18*scale.move,dmg:scale.damage,color:def.color,accent:def.accent,phase:0,moveClock:0,moveScale:scale.move,baseShoot:Math.max(.28,.78*scale.fire),shoot:.65,dead:false,rewardMult:scale.reward,vx:0,vy:0};
+ enemies.push(e);state.boss=e;ui.bossName.textContent=`${def.name} // ${def.archetype}`;ui.bossBar.style.display='block';sfx('boss');startBossTheme(e);log(`${def.name} (${def.archetype}) entered the wake.`)
 }
+
 function xpStyle(e,v,i){
  if(e.type==='boss')return {color:i%2?'#ffb86b':'#ffd36a',glow:'#fff0b0',size:10+v*.12,shape:i%2?'hex':'star',trail:true};
  if(e.type==='elite'||e.type==='shielded')return {color:'#c88cff',glow:'#e4c0ff',size:7.5+v*.15,shape:i%2?'hex':'diamond',trail:true};

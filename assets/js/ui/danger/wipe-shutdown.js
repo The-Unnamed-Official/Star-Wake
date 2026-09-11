@@ -14,7 +14,7 @@ async function beginFakeShutdown(){
  resetPersistentSave();diff='normal';secretTrackActive=false;rotationIndex=0;musicCurrentTrack=MUSIC_ROTATION[0];applyAudioSettings();refreshControlHints();
  await waitMs(5000);
  const log=document.createElement('div');log.className='boot-log boot-cursor';shut.appendChild(log);
- const lines=['STARWAKE BOOT ROM 0.96','checking wake core ........ OK','rebuilding navigation map .. OK','clearing pilot archive ..... COMPLETE','restoring audio matrix ..... OK','mounting empty save ........ OK','warning: user learned nothing','launch shell ready.'];
+ const lines=['STARWAKE BOOT ROM 0.97','checking wake core ........ OK','rebuilding navigation map .. OK','clearing pilot archive ..... COMPLETE','restoring audio matrix ..... OK','mounting empty save ........ OK','warning: user learned nothing','launch shell ready.'];
  for(const line of lines){log.textContent+=line+'\n';await waitMs(390)}
  await waitMs(420);playStartupChime();await waitMs(1100);shut.remove();frontLayer.classList.remove('hidden');initRun();
  makeFreshMusicBus(.05);showMain();if(audioUnlocked)startSoundtrack(.15)

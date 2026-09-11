@@ -1,7 +1,16 @@
 'use strict';
 
 const CHANGELOG=[
- {v:'0.96',title:'Identity / Arsenal Readability',date:'Current beta',intro:'A presentation, targeting and identity overhaul.',items:[
+ {v:'0.97',title:'Boss Foundry',date:'Current beta',intro:'Bosses, directional readability and encounter variety received a major expansion.',items:[
+  ['128 boss identities','Boss sectors now pick from 128 procedural silhouettes, including wide slow gates, chunky citadels, slim high-speed needles and many hybrids.'],
+  ['Unique boss themes','Every boss identity derives its own 10-second looping battle motif and temporarily takes over the soundtrack during the encounter.'],
+  ['Directional enemies','Arrow-shaped contacts now rotate along their real movement vector instead of visually pointing the wrong way.'],
+  ['Endless pressure curve','Enemy hull, damage and spawn pressure continue scaling through later sectors with polynomial curves tuned around attainable upgrade growth.'],
+  ['Desperate reroll ad','At zero rerolls you can endure a deliberately stupid 55-second fake advertisement to earn one free reroll.'],
+  ['Phase direction rules','Keyboard Phase Shift remembers the last physical left/right arrow press, independent of remapped movement keys.'],
+  ['New defaults','Movement defaults to arrow keys, Phase to Left Shift, Nova to Q, Pause to Z and Build to X.']
+ ]},
+ {v:'0.96',title:'Identity / Arsenal Readability',date:'Beta',intro:'A presentation, targeting and identity overhaul.',items:[
   ['New STARWAKE identity','A fully redrawn wake-star logo and a deeper interface treatment across the front end and run HUD.'],
   ['Readable upgrades','Upgrade cards now say exactly what changes, show the numeric increase, tier and a short explanation.'],
   ['Weapon accuracy','Normal shots now fly straight with controllable drift; target acquisition only happens through Homing upgrades.'],

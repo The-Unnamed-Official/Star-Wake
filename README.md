@@ -1,4 +1,4 @@
-# STARWAKE v0.96 Beta — Modular Project
+# STARWAKE v0.97 Beta — Modular Project
 
 STARWAKE is split into small, focused HTML/CSS/JavaScript modules. There is no bundler, framework, npm dependency, or build step.
 
@@ -74,3 +74,19 @@ Phase Shift status is presented as a button-like visual in the bottom-right HUD,
 ## No build step
 
 `index.html` loads the scripts in explicit dependency order. This makes the source easy to inspect and edit directly while still keeping systems separated by responsibility.
+
+
+## v0.97 Boss Foundry
+
+- 128 generated boss identities with distinct proportions, silhouettes, movement personalities, stats and projectile patterns.
+- Each boss identity has a deterministic 10-second procedural boss theme that loops for that fight, then the normal soundtrack resumes.
+- Directional enemy sprites rotate along their actual movement velocity.
+- Enemy/boss scaling uses polynomial pressure curves rather than runaway exponential scaling, so strong upgrade choices remain meaningful.
+- At 0 rerolls, a 55-second intentionally terrible fake ad can award one free reroll.
+- Default keyboard controls:
+  - Left / Right Arrow: movement
+  - Left Shift: Phase Shift
+  - Q: Nova Bomb
+  - Z: Pause
+  - X: Build
+- Keyboard Phase direction remembers the last physical Left/Right Arrow input and is intentionally independent of movement remaps.

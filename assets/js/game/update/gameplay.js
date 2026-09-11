@@ -22,7 +22,7 @@ function update(dt){
  // free horizontal movement, all input types
  let axis=(input.right?1:0)-(input.left?1:0);if(Math.abs(input.gamepadX)>.12)axis=input.gamepadX;
  const target=input.touchActive?input.touchX:(input.mouseActive&&!input.left&&!input.right&&Math.abs(input.gamepadX)<.12?input.mouseX:null);
- if(target!=null){const diffx=target-state.x,desired=Math.max(-state.maxSpeed,Math.min(state.maxSpeed,diffx*7));state.vx+=(desired-state.vx)*Math.min(1,dt*12);if(Math.abs(diffx)>3)state.lastDir=Math.sign(diffx)}
+ if(target!=null){const diffx=target-state.x,desired=Math.max(-state.maxSpeed,Math.min(state.maxSpeed,diffx*7));state.vx+=(desired-state.vx)*Math.min(1,dt*12)}
  else if(Math.abs(axis)>.02){const desired=axis*state.maxSpeed;state.vx+=(desired-state.vx)*Math.min(1,dt*(state.accel/300))}
  else{const dec=state.brake*dt;if(Math.abs(state.vx)<=dec)state.vx=0;else state.vx-=Math.sign(state.vx)*dec}
  state.x+=state.vx*dt;if(state.x<25){state.x=25;state.vx=Math.max(0,state.vx)}if(state.x>W-25){state.x=W-25;state.vx=Math.min(0,state.vx)}
@@ -31,7 +31,7 @@ function update(dt){
  droneClock-=dt;if(droneClock<=0){fireDrones();droneClock=1/Math.max(.25,state.droneRate)}
 
  state.grace=Math.max(0,state.grace-dt);
- if(state.grace<=0&&!state.boss){spawnClock-=dt;const base=Math.max(.20,1.48*Math.pow(.94,state.sector-1))/difficulty[diff].spawn;if(spawnClock<=0){spawnEnemy();spawnClock=base*(.84+Math.random()*.44)}}
+ if(state.grace<=0&&!state.boss&&state.sector%5!==0){spawnClock-=dt;const base=spawnIntervalForSector(state.sector);if(spawnClock<=0){spawnEnemy();spawnClock=base*(.84+Math.random()*.44)}}
  if(state.sector%5===0&&!state.boss&&state.kills===0&&state.grace<=0&&enemies.length===0)spawnBoss();
 
  const slow=state.slow>0?.52:1;
@@ -61,9 +61,11 @@ function update(dt){
 
  for(const e of enemies){
   if(e.dead)continue;e.phase+=dt*2.2;
-  if(e.type==='boss'){e.x=W/2+Math.sin(e.phase*.65)*W*.20;e.y=84+Math.sin(e.phase)*12;e.shoot-=dt;if(e.shoot<=0){enemyShoot(e);e.shoot=Math.max(.36,.74-state.sector*.008)}}
+  if(e.type==='boss')updateBossEntity(e,dt,slow);
   else{
-   e.y+=e.speed*dt*slow;if(e.type==='zigzag')e.x+=Math.sin(e.phase*2.2)*50*dt;if(e.type==='charger'&&e.y>H*.45)e.y+=e.speed*.65*dt;if(e.type==='sniper'||e.type==='shooter'){e.shoot-=dt;if(e.shoot<=0&&e.y>45&&e.y<H*.62){enemyShoot(e);e.shoot=e.type==='sniper'?1.55:2.2}}
+   e.vx=0;e.vy=e.speed*slow;if(e.type==='zigzag')e.vx=Math.sin(e.phase*2.2)*50;if(e.type==='charger'&&e.y>H*.45)e.vy*=1.65;
+   e.x+=e.vx*dt;e.y+=e.vy*dt;
+   if(e.type==='sniper'||e.type==='shooter'){e.shoot-=dt;if(e.shoot<=0&&e.y>45&&e.y<H*.62){enemyShoot(e);e.shoot=e.type==='sniper'?1.55:2.2}}
   }
   if(e.type!=='boss'&&e.y>state.y-15&&Math.abs(e.x-state.x)<e.r+17){e.dead=true;takeDamage(e.dmg)}
   else if(e.type!=='boss'&&e.y>H+30){e.dead=true;takeDamage(e.dmg*.55)}
@@ -72,7 +74,7 @@ function update(dt){
  // robust bullet collisions: mark dead first, clean later
  for(let bi=bullets.length-1;bi>=0;bi--){
   const b=bullets[bi];let hit=null;
-  for(const e of enemies){if(e.dead)continue;if(Math.hypot(b.x-e.x,b.y-e.y)<e.r+b.size+2){hit=e;break}}
+  for(const e of enemies){if(e.dead)continue;if(enemyHitTest(e,b.x,b.y,b.size+2)){hit=e;break}}
   if(!hit)continue;damageEnemy(hit,b.dmg,b);
   if(Math.random()<state.chainChance){const t=enemies.find(e=>!e.dead&&e!==hit&&Math.hypot(e.x-hit.x,e.y-hit.y)<130);if(t)damageEnemy(t,b.dmg*.42,null)}
   if(b.pierce>0)b.pierce--;else bullets.splice(bi,1)

@@ -22,12 +22,16 @@ document.addEventListener('keydown',e=>{
  if(state?.choosing){if(e.code==='Digit1')pickUpgrade(0);if(e.code==='Digit2')pickUpgrade(1);if(e.code==='Digit3')pickUpgrade(2);if(e.code==='KeyR')reroll();return}
  if(state?.paused){if(controlMatches('pause',e.code)||e.code==='Enter')pause();return}
  if(!state?.running)return;
- if(controlMatches('moveLeft',e.code)){input.left=true;state.lastDir=-1;e.preventDefault()}
- if(controlMatches('moveRight',e.code)){input.right=true;state.lastDir=1;e.preventDefault()}
+ // Keyboard Phase direction is based only on physical arrow-key input,
+ // never the remapped movement bindings.
+ if(e.code==='ArrowLeft')state.lastDashDir=-1;
+ if(e.code==='ArrowRight')state.lastDashDir=1;
+ if(controlMatches('moveLeft',e.code)){input.left=true;e.preventDefault()}
+ if(controlMatches('moveRight',e.code)){input.right=true;e.preventDefault()}
  if(controlMatches('phase',e.code)&&!e.repeat){phaseShift();e.preventDefault()}
  if(controlMatches('nova',e.code)&&!e.repeat){useBomb();e.preventDefault()}
  if(controlMatches('pause',e.code)&&!e.repeat){pause();e.preventDefault()}
- if(controlMatches('build',e.code)&&!e.repeat){openDrawer();e.preventDefault()}
+ if(controlMatches('build',e.code)&&!e.repeat){toggleBuildMenu();e.preventDefault()}
 });
 document.addEventListener('keyup',e=>{
  if(controlMatches('moveLeft',e.code))input.left=false;
