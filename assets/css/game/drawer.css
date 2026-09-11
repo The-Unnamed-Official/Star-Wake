@@ -1,4 +1,4 @@
-/* STARWAKE v0.96 — drawer */
+/* STARWAKE v0.97 — drawer */
 
 .run-drawer{min-height:0;display:grid;grid-template-rows:auto auto minmax(0,1fr);border:1px solid rgba(179,222,255,.13);border-radius:18px;
  background:
@@ -14,7 +14,7 @@
 
 .drawer-close{display:none;width:30px;height:30px;border:1px solid var(--line);border-radius:8px;background:#0b1520;color:var(--text)}
 
-.drawer-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:7px;border-bottom:1px solid var(--line)}
+.drawer-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px;border-bottom:1px solid var(--line)}
 
 .sidecontent{min-height:0;overflow:auto;padding:9px;scrollbar-width:none}
 
@@ -67,3 +67,7 @@
   transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
  .run-drawer.build-inspect::after{content:"BUILD INSPECT";position:absolute;right:12px;top:11px;font-size:5px;font-weight:950;letter-spacing:.14em;color:var(--cyan);pointer-events:none}
 }
+
+.drawer-tabs .tab{position:relative;overflow:hidden;transition:.15s ease}.drawer-tabs .tab::after{content:"";position:absolute;left:18%;right:18%;bottom:2px;height:1px;background:var(--cyan);transform:scaleX(0);transition:transform .15s ease}.drawer-tabs .tab.active::after{transform:scaleX(1)}
+.icon-button{position:relative;overflow:hidden}.icon-button span{display:block;transition:transform .2s cubic-bezier(.2,.8,.2,1)}.icon-button:hover span,.icon-button:focus-visible span{transform:scale(1.12) rotate(8deg)}
+.run-drawer.settings-inspect{border-color:rgba(103,222,254,.22)}

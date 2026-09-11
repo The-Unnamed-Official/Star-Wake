@@ -1,4 +1,4 @@
-/* STARWAKE v0.96 — layout */
+/* STARWAKE v0.97 — layout */
 
 .game-app{height:100dvh;min-height:0;padding:10px;max-width:1700px;margin:0 auto;display:grid;grid-template-rows:55px minmax(0,1fr) 28px;gap:8px}
 

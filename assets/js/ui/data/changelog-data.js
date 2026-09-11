@@ -6,8 +6,11 @@ const CHANGELOG=[
   ['Unique boss themes','Every boss identity derives its own 10-second looping battle motif and temporarily takes over the soundtrack during the encounter.'],
   ['Directional enemies','Arrow-shaped contacts now rotate along their real movement vector instead of visually pointing the wrong way.'],
   ['Endless pressure curve','Enemy hull, damage and spawn pressure continue scaling through later sectors with polynomial curves tuned around attainable upgrade growth.'],
-  ['Desperate reroll ad','At zero rerolls you can endure a deliberately stupid 55-second fake advertisement to earn one free reroll.'],
-  ['Phase direction rules','Keyboard Phase Shift remembers the last physical left/right arrow press, independent of remapped movement keys.'],
+  ['Fullscreen ad disasters','At zero rerolls, one of six 55-second fullscreen fake mobile-gameplay ads takes over the entire display before awarding a reroll.'],
+  ['Phase direction rules','Arrow keys, controller/touch steering and mouse-follow movement all feed the most recent Phase direction; remapped movement keys remain independent of the physical arrow-key memory.'],
+  ['Ignore gameplay mouse','Controls now include an option to disable mouse steering and mouse combat buttons while leaving menu mouse input untouched.'],
+  ['Live settings','Audio, presentation and remapping controls are now directly accessible during a run.'],
+  ['Animated identity','The STARWAKE SVG emblem now animates its star layers, core and wake lines independently, with improved menu button motion.'],
   ['New defaults','Movement defaults to arrow keys, Phase to Left Shift, Nova to Q, Pause to Z and Build to X.']
  ]},
  {v:'0.96',title:'Identity / Arsenal Readability',date:'Beta',intro:'A presentation, targeting and identity overhaul.',items:[

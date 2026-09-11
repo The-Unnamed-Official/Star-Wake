@@ -3,6 +3,7 @@
 document.addEventListener('keydown',e=>{
  if(controlRemapActive)return;
  unlockAudioAndStartMenu();
+ if(typeof rerollAdActive!=='undefined'&&rerollAdActive){e.preventDefault();return}
  const wipeOpen=typeof wipeExperience!=='undefined'&&wipeExperience&&!wipeExperience.hidden;
  if(wipeOpen){
   const bs=interactiveButtons();

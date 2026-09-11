@@ -1,39 +1,76 @@
 'use strict';
 
-let rerollAdTimer=null;
-const REROLL_AD_SECONDS=55;
-const REROLL_AD_SCENES=[
- ['AIR 2™','Air. But gamer.','$39.99 per inhalation. Bottle sold separately.'],
- ['SQUARE WATER','Finally: water with corners.','Scientifically less round than competing water.'],
- ['PRO GAMER SPOON','+0.0004% cereal accuracy.','Now with RGB-compatible reflective metal.'],
- ['CLOUD STORAGE BOX','We put a cloud in a box.','Do not open indoors. Legal requested we say that.'],
- ['BANANA+','Subscription fruit.','Peel functionality requires the Premium Peel Pass.'],
- ['CHAIR DLC','Unlock the backrest.','Sitting sold separately in selected regions.'],
- ['INSTANT GRASS','Touch grass from home.','Contains one ethically sourced pixel of lawn.'],
- ['ULTRA FORK X','Four prongs. Zero compromises.','Fork benchmark score: somehow 14,002.'],
- ['NOT A ROCK','It is absolutely a rock.','But this one has a companion app.'],
- ['WAKE COIN','The currency of maybe.','Value has moved 700% while you read this sentence.'],
- ['FINAL AD BOSS','Congratulations. You watched all of this.','We are sorry. Here is your reroll.']
-];
-function renderRerollAd(elapsed){
- const remain=Math.max(0,REROLL_AD_SECONDS-elapsed),idx=Math.min(REROLL_AD_SCENES.length-1,Math.floor(elapsed/5)),scene=REROLL_AD_SCENES[idx],p=Math.min(1,elapsed/REROLL_AD_SECONDS);
- overlayCard.innerHTML=`<div class="fake-ad">
-  <div class="fake-ad-top"><span>STARWAKE VERY REAL AD NETWORK</span><b>AD ${idx+1}/${REROLL_AD_SCENES.length}</b></div>
-  <div class="fake-ad-product"><div class="fake-ad-orbit"><span>${['◇','□','✦','◌','△'][idx%5]}</span></div><div><small>SPONSORED BY QUESTIONABLE DECISIONS</small><h2>${scene[0]}</h2><h3>${scene[1]}</h3><p>${scene[2]}</p></div></div>
-  <div class="fake-ad-review">★★★★★ <span>“I clicked this because I had zero rerolls.” — verified desperate pilot</span></div>
-  <div class="fake-ad-progress"><div style="width:${p*100}%"></div></div>
-  <div class="fake-ad-bottom"><span>Reward: +1 reroll</span><b>${remain.toFixed(1)}s</b></div>
- </div>`
+/* STARWAKE v0.97 — fullscreen 55-second procedural fake ad break */
+
+let rerollAdActive=false,rerollAdRaf=0,rerollAdStarted=0,rerollAdCurrent=null;
+
+function ensureRerollAdExperience(){
+ let root=E('rerollAdExperience');
+ if(root)return root;
+ root=document.createElement('div');root.id='rerollAdExperience';root.className='reroll-ad-experience';root.hidden=true;
+ root.innerHTML=`<div class="reroll-ad-backdrop"></div>
+  <div class="reroll-ad-topbar">
+   <div><span class="ad-network-dot"></span><b>QUESTIONABLE MOBILE AD NETWORK</b><small>Rewarded advertisement · definitely worth it</small></div>
+   <div class="reroll-ad-timer"><span>REWARD IN</span><b id="rerollAdTime">55.0s</b></div>
+  </div>
+  <main class="reroll-ad-stage">
+   <section class="reroll-ad-phone">
+    <div class="reroll-ad-phone-top"><span id="rerollAdApp">FAKE GAME</span><b>ADVERTISEMENT</b></div>
+    <canvas id="rerollAdCanvas" width="720" height="1280"></canvas>
+    <div class="reroll-ad-install">
+     <div class="reroll-ad-appicon" id="rerollAdIcon">?</div>
+     <div><b id="rerollAdTitle">GAME</b><span id="rerollAdStore">4.9 ★</span></div>
+     <div class="reroll-ad-cta" id="rerollAdCta">INSTALL</div>
+    </div>
+   </section>
+   <aside class="reroll-ad-copy">
+    <small>SPONSORED CONTENT</small>
+    <h1 id="rerollAdBigTitle">VERY REAL GAME</h1>
+    <p id="rerollAdSubtitle">This ad was created by questionable decisions.</p>
+    <div class="reroll-ad-badges"><span>NO SKIP</span><span>+1 REROLL</span><span>55 SECONDS</span></div>
+    <div class="reroll-ad-review">★★★★★ <span>“I had zero rerolls and things got desperate.”</span></div>
+   </aside>
+  </main>
+  <footer class="reroll-ad-footer">
+   <div class="reroll-ad-progress"><div id="rerollAdProgress"></div></div>
+   <span>Watching this entire disaster awards one reroll.</span>
+  </footer>`;
+ document.body.appendChild(root);return root
+}
+function configureRerollAd(ad){
+ E('rerollAdApp').textContent=ad.title;
+ E('rerollAdIcon').textContent=ad.icon;
+ E('rerollAdTitle').textContent=ad.title;
+ E('rerollAdStore').textContent=ad.store;
+ E('rerollAdCta').textContent=ad.cta;
+ E('rerollAdBigTitle').textContent=ad.title;
+ E('rerollAdSubtitle').textContent=ad.subtitle;
+ const root=E('rerollAdExperience');root.style.setProperty('--ad-accent',ad.accent);root.style.setProperty('--ad-accent-2',ad.accent2)
+}
+function renderRerollAdFrame(now){
+ if(!rerollAdActive)return;
+ const elapsed=(now-rerollAdStarted)/1000,remain=Math.max(0,REROLL_AD_SECONDS-elapsed),p=Math.min(1,elapsed/REROLL_AD_SECONDS);
+ E('rerollAdTime').textContent=remain.toFixed(1)+'s';E('rerollAdProgress').style.width=(p*100)+'%';
+ renderFakeAdGameplay(E('rerollAdCanvas'),rerollAdCurrent,Math.min(elapsed,REROLL_AD_SECONDS));
+ if(elapsed>=REROLL_AD_SECONDS){finishRerollAd();return}
+ rerollAdRaf=requestAnimationFrame(renderRerollAdFrame)
 }
 function startRerollAd(){
- if(!state?.choosing||state.rerolls>0||rerollAdTimer)return;
- const started=performance.now();renderRerollAd(0);
- rerollAdTimer=setInterval(()=>{
-  const elapsed=(performance.now()-started)/1000;renderRerollAd(elapsed);
-  if(elapsed>=REROLL_AD_SECONDS){
-   clearInterval(rerollAdTimer);rerollAdTimer=null;state.rerolls=1;sfx('level');
-   overlayCard.innerHTML=`<div class="fake-ad-finish"><small>ADVERTISEMENT SURVIVED</small><h2>YOU ACTUALLY WATCHED IT.</h2><p>Fine. Have the reroll.</p><b>+1 REROLL</b></div>`;
-   setTimeout(()=>showUpgrade('Ad survived'),1200)
-  }
- },200)
+ if(!state?.choosing||state.rerolls>0||rerollAdActive)return;
+ rerollAdActive=true;rerollAdCurrent=pickRerollAd();rerollAdStarted=performance.now();
+ const root=ensureRerollAdExperience();configureRerollAd(rerollAdCurrent);
+ overlay.style.display='none';root.hidden=false;document.body.classList.add('reroll-ad-running');
+ sfx('ui');rerollAdRaf=requestAnimationFrame(renderRerollAdFrame)
+}
+function finishRerollAd(){
+ if(!rerollAdActive)return;
+ rerollAdActive=false;cancelAnimationFrame(rerollAdRaf);rerollAdRaf=0;
+ state.rerolls=1;sfx('level');
+ const root=E('rerollAdExperience');
+ root.classList.add('rewarding');
+ root.querySelector('.reroll-ad-stage').innerHTML=`<div class="reroll-ad-reward"><small>55 SECONDS OF YOUR LIFE: GONE</small><h1>+1 REROLL</h1><p>You actually watched the whole thing. Respectfully, why?</p></div>`;
+ setTimeout(()=>{
+  root.hidden=true;root.classList.remove('rewarding');root.remove();document.body.classList.remove('reroll-ad-running');
+  showUpgrade('Advertisement survived')
+ },1400)
 }

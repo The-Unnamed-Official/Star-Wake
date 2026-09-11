@@ -65,6 +65,8 @@
     "assets/js/render/helpers-enemies.js",
     "assets/js/render/player.js",
     "assets/js/render/scene.js",
+    "assets/js/ui/ad/ad-catalog.js",
+    "assets/js/ui/ad/ad-gameplay.js",
     "assets/js/ui/ad/reroll-ad.js",
     "assets/js/ui/branding/logo.js",
     "assets/js/ui/danger/wipe-content.js",
@@ -89,6 +91,8 @@
   "boss_variants": 128,
   "boss_theme_length_seconds": 10,
   "reroll_ad_seconds": 55,
+  "reroll_ad_variants": 6,
+  "reroll_ad_mode": "fullscreen procedural gameplay video",
   "soundtrack_rotation": [
     "Redline",
     "Iron Halo",
@@ -101,6 +105,7 @@
   ],
   "secret_track": "AfterImage",
   "wipe_confirmation_stages": 33,
+  "save_key": "starwake-v097-save",
   "default_controls": {
     "moveLeft": "ArrowLeft",
     "moveRight": "ArrowRight",
@@ -108,5 +113,10 @@
     "nova": "KeyQ",
     "pause": "KeyZ",
     "build": "KeyX"
+  },
+  "settings": {
+    "in_run": true,
+    "ignore_gameplay_mouse": true,
+    "remappable_keyboard": true
   }
 }

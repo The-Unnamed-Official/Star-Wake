@@ -21,8 +21,14 @@ function update(dt){
 
  // free horizontal movement, all input types
  let axis=(input.right?1:0)-(input.left?1:0);if(Math.abs(input.gamepadX)>.12)axis=input.gamepadX;
- const target=input.touchActive?input.touchX:(input.mouseActive&&!input.left&&!input.right&&Math.abs(input.gamepadX)<.12?input.mouseX:null);
- if(target!=null){const diffx=target-state.x,desired=Math.max(-state.maxSpeed,Math.min(state.maxSpeed,diffx*7));state.vx+=(desired-state.vx)*Math.min(1,dt*12)}
+ const mouseTarget=!persistent.settings.ignoreGameplayMouse&&input.mouseActive&&!input.left&&!input.right&&Math.abs(input.gamepadX)<.12?input.mouseX:null;
+ const target=input.touchActive?input.touchX:mouseTarget;
+ if(target!=null){
+  const diffx=target-state.x;
+  if(Math.abs(diffx)>2)state.lastDashDir=Math.sign(diffx);
+  const desired=Math.max(-state.maxSpeed,Math.min(state.maxSpeed,diffx*7));
+  state.vx+=(desired-state.vx)*Math.min(1,dt*12)
+ }
  else if(Math.abs(axis)>.02){const desired=axis*state.maxSpeed;state.vx+=(desired-state.vx)*Math.min(1,dt*(state.accel/300))}
  else{const dec=state.brake*dt;if(Math.abs(state.vx)<=dec)state.vx=0;else state.vx-=Math.sign(state.vx)*dec}
  state.x+=state.vx*dt;if(state.x<25){state.x=25;state.vx=Math.max(0,state.vx)}if(state.x>W-25){state.x=W-25;state.vx=Math.min(0,state.vx)}
