@@ -1,0 +1,7 @@
+/* STARWAKE v0.96 — short-screen */
+
+@media(max-height:620px){
+  .menu-left{padding:16px 24px}.menu-title{font-size:43px;margin:6px 0}.menu-subtitle{font-size:8px;line-height:1.35}.menu-music{margin-top:4px;font-size:5.8px}.menu-button{min-height:52px}.menu-nav{gap:5px}.menu-button strong{font-size:9px}.menu-button span{font-size:6px}
+  .front-screen{padding:12px}.front-top{margin-bottom:7px}.launch-card,.hangar-card{padding:9px}.tile-icon{width:27px;height:27px;font-size:12px;margin-bottom:5px}.launch-card p,.hangar-card p{font-size:6px}
+  .choice{padding:7px}.choice-icon{width:28px;height:28px;font-size:13px;margin-bottom:5px}.choice p{font-size:5.5px}.rarity{margin-top:3px}
+}

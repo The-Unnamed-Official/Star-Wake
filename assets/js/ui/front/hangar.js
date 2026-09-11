@@ -1,0 +1,7 @@
+'use strict';
+
+function hangarRows(){return [['damage','◆','Weapon Calibration','+10% starting damage',6],['hp','♥','Hull Framing','+12 starting hull',6],['shield','⬡','Shield Generator','+10 starting shield',8],['magnet','⌁','Tractor Array','+15% pickup radius',5],['phase','»','Phase Tuning','-5% Phase cooldown',7],['luck','✦','Lucky Core','Better crits and rarity',10],['core','◴','Core Firmware','-0.45s shield-core reboot time',9]]}
+function showHangar(){
+ const cards=hangarRows().map(([id,icon,n,d,b],i)=>{const lv=persistent.perma[id]||0,c=b+lv*Math.ceil(b*.75);return `<div class="hangar-card"><div class="tile-icon">${icon}</div><h3>${n} <span style="color:var(--cyan)">Lv.${lv}</span></h3><p>${d}</p><button class="front-action" data-buy="${i}">${c} ALLOY</button></div>`}).join('');
+ showFront(`<div class="front-screen"><div class="front-top"><div><h2>Hangar</h2><p>Permanent starting systems · ${Math.floor(persistent.alloy)} Alloy available.</p></div><button class="back-button" data-front="main">BACK</button></div><div class="content-scroll"><div class="hangar-grid">${cards}</div><div class="screen-card" style="margin-top:9px"><h3>Configuration moved</h3><p>Audio, visual options, control remapping and save management now live in the dedicated Settings screen.</p><div style="margin-top:9px"><button class="front-action" data-front="settings">OPEN SETTINGS</button></div></div></div></div>`,'hangar')
+}
